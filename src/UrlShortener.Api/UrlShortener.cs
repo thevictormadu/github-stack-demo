@@ -43,7 +43,7 @@ public sealed class UrlShortenerService(IUrlRepository repository)
 
 public static class UrlValidation
 {
-    public const string ErrorMessage = "URL must be an absolute HTTP or HTTPS URL.";
+    public const string ErrorMessage = "Enter an absolute URL using HTTP or HTTPS.";
 
     public static bool IsValid(string url) =>
         Uri.TryCreate(url, UriKind.Absolute, out var uri) &&
