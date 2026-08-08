@@ -1,7 +1,15 @@
+using Microsoft.Data.Sqlite;
 using UrlShortener.Api;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddSingleton<IUrlRepository, InMemoryUrlRepository>();
+builder.Services.AddSingleton(_ =>
+{
+    var connection = new SqliteConnection(
+        builder.Configuration.GetConnectionString("Urls") ?? "Data Source=urls.db");
+    connection.Open();
+    return connection;
+});
+builder.Services.AddSingleton<IUrlRepository, SqliteUrlRepository>();
 builder.Services.AddSingleton<UrlShortenerService>();
 
 var app = builder.Build();
